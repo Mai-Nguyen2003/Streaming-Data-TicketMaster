@@ -5,7 +5,7 @@
 This repository contains a beginner project that aims to familiarize with distributed-system concept by Kafka Producer sending messages to multiple topics, Spark Structured Streaming, usage of AWS Cloud ecosystem . The goal is to collect streaming data, process it in real time, store it in an optimized data storage for further query performance.
 
 ## Data Workflow
-1. Before streaming into Kafka, each upcoming event (music, sport, art&theater,...) extracted from TicketMaster API is split into data pieces, which are then sent in appropriate topics (event_data, sales_data, classification_data, venue_data, attraction_data)
+1. Before streaming into Kafka, each upcoming event (concerts, sports, art&theater,...) extracted from TicketMaster API is split into data pieces, which are then sent in appropriate topics (event_data, sales_data, classification_data, venue_data, attraction_data)
 2. Kafka publics messages to Spark (1 master node, 2 worker nodes) to continue transform data
 3. After Spark's streaming process, partition parquet files from each topic are stored in AWS S3
 4. Using AWS Glue to crawl data schema, transform parquet  into table format ; then performing queries in AWS Athena <br/>
@@ -20,4 +20,4 @@ Kafka and Spark are deployed in Docker container
 
 ## Project Structure
 * jobs: contains file creating Kafka Producer for sending messages, submitting spark job processing data
-* Data_Query: contains  result queried datasets 
+* Data_Query: contains  result queried datasets for event search. ticket booking
