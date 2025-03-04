@@ -1,4 +1,4 @@
-# Streaming Data TicketMaster
+# Real-Time Event Data Processing
 
 ![](TicketMaster_Project.png)
 
