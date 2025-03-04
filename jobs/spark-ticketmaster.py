@@ -2,7 +2,7 @@ from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 
-from jobs.configuration import configuration
+from jobs.config import configuration
 def main():
     spark = SparkSession.builder.appName('EventStreaming')\
         .config("spark.jars.packages",
@@ -74,11 +74,11 @@ def main():
                 .start())
 
 
-    event_df = read_kafka_topic('event_data', event_schema).alias('event')
-    sales_df = read_kafka_topic('sales_data', sales_schema).alias('sales')
-    classification_df = read_kafka_topic('classification_data', classification_schema).alias('classification')
-    venue_df = read_kafka_topic('venue_data', venue_schema).alias('venue')
-    attraction_df = read_kafka_topic('attraction_data', attraction_schema).alias('attraction')
+    event_df = read_kafka_topic('event_data', event_schema).dropDuplicates(['id']).alias('event')
+    sales_df = read_kafka_topic('sales_data', sales_schema).dropDuplicates(['id']).alias('sales')
+    classification_df = read_kafka_topic('classification_data', classification_schema).dropDuplicates(['id']).alias('classification')
+    venue_df = read_kafka_topic('venue_data', venue_schema).dropDuplicates(['id']).alias('venue')
+    attraction_df = read_kafka_topic('attraction_data', attraction_schema).dropDuplicates(['id','attraction']).alias('attraction')
 
 
     query1 = streamWriter(event_df,"s3a://spark-ticketmaster/checkpoints/event_data","s3a://spark-ticketmaster/data/event_data")
